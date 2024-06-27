@@ -7,10 +7,26 @@ import xml.etree.ElementTree as ET
 import os
 import subprocess
 from datetime import datetime
+version = "0.0.2"
 
-parser = argparse.ArgumentParser(description='Parse rss xml file and download DR podcasts')
+help_text = "URL for the RSS feed."
+description = """
+This script will parse the RSS link from dr.com and download the podcast as mp3 files.
+Go to https://www.dr.dk/lyd/programmer to find a podcast,
+then copy link from the RSS feed and use this as argument --url for the script.
+The script will create a directory with the name of the podcast serie and add all the mp3 file in that directory.
+The mp3 will be prefixed with the date of the publication.
+
+Example
+
+   python drpotcast.py --url https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast
+
+Will create a directory "Stjerner og striber" and add the downloaded mp3 files.
+"""
+
+parser = argparse.ArgumentParser(description=description,formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--url', type=str, 
-                    default="https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast", help="URL for the RSS feed")
+                    default="https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast", help=help_text)
 args = parser.parse_args()
 url = args.url
 response = requests.get(url)
