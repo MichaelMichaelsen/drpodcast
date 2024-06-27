@@ -1,0 +1,8 @@
+https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast
+https://api.dr.dk/podcasts/v1/feeds/prompt
+https://api.dr.dk/podcasts/v1/feeds/guld-og-groenne-skove
+https://api.dr.dk/podcasts/v1/feeds/djaevlen-i-detaljen
+https://api.dr.dk/podcasts/v1/feeds/tabloid-3
+https://api.dr.dk/podcasts/v1/feeds/foelg-pengene
+https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3
+https://api.dr.dk/podcasts/v1/feeds/genstart
