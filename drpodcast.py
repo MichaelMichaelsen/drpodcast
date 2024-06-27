@@ -9,7 +9,7 @@ import subprocess
 from datetime import datetime
 import yt_dlp
 
-version = "0.0.2"
+version = "0.0.3"
 
 help_text = "URL for the RSS feed."
 description = """
@@ -21,7 +21,7 @@ The mp3 will be prefixed with the date of the publication.
 
 Example
 
-   python drpotcast.py --url https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast
+   python drpodcast.py --url https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3
 
 Will create a directory "Stjerner og striber" and add the downloaded mp3 files.
 """
@@ -31,14 +31,15 @@ parser.add_argument('--url', type=str,
                     default="https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3", help=help_text)
 args = parser.parse_args()
 url = args.url
-response = requests.get(url)
-if response.status_code == 200:
+try:
+    response = requests.get(url)
+    response.raise_for_status()
     htmltext = response.text
     root = ET.fromstring(htmltext)
     # Extract the subdirectory name from the image title
     podcast_title = root.find('.//channel/title').text
     print(f"Podcast title {podcast_title}")
-    download_path = f"./{podcast_title}"
+    download_path = f"./podcasts/{podcast_title}"
     # Parse the xml and find all the titles and the url
     for idx, item in enumerate(root.findall('.//item')):
         title = item.find('title')
@@ -56,8 +57,9 @@ if response.status_code == 200:
             yt_opts = {
                'verbose': True,
                 'outtmpl': output_template,
+                'windows-filenames': True,
                 #'simulate': True,
-                'paths': {'home': download_path},
+                'paths': {'home': download_path}
             }
             # args = ["yt-dlp", "--restrict-filenames", "-o", output_file, url ]
             # result = subprocess.run(args, shell=False, text=True)
@@ -66,3 +68,9 @@ if response.status_code == 200:
                 ydl.download(url)
             print('-' * 50)
     #print(f"Output file {file_name} created.")
+except requests.exceptions.HTTPError as errh:
+    print(f"HTTP Error. {errh.args[0]}")
+except requests.exceptions.ReadTimeout as errrt: 
+    print("Time out")
+except requests.exceptions.ConnectionError as conerr: 
+    print("Connection error") 
