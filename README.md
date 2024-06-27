@@ -23,18 +23,17 @@ pip install -r requirements.tx
 
 Clone the repo
 
-## Run
+## Usage
 ```
 python drpodcast.py --url https://api.dr.dk/podcasts/v1/feeds/tabloid-3
 ```
 
-## Url from DR podcasts
+### Url from DR podcasts
 This can be extracted in the overview page for each podcast.
-
 <img src="images/RSSIcon.png" alt="RSSIcon">
  On the RSS icon, just right click, select copy link and use that link as argument for the script.
 
-## DR podcast
+### DR podcast
 Currently I have found the following podcasts
 
 * https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast
