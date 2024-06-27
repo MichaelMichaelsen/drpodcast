@@ -30,17 +30,18 @@ python drpodcast.py --url https://api.dr.dk/podcasts/v1/feeds/tabloid-3
 
 ## Url from DR podcasts
 This can be extracted in the overview page for each podcast.
+
 <img src="images/RSSIcon.png" alt="RSSIcon">
  On the RSS icon, just right click, select copy link and use that link as argument for the script.
 
 ## DR podcast
 Currently I have found the following podcasts
 
-https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast
-https://api.dr.dk/podcasts/v1/feeds/prompt
-https://api.dr.dk/podcasts/v1/feeds/guld-og-groenne-skove
-https://api.dr.dk/podcasts/v1/feeds/djaevlen-i-detaljen
-https://api.dr.dk/podcasts/v1/feeds/tabloid-3
-https://api.dr.dk/podcasts/v1/feeds/foelg-pengene
-https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3
-https://api.dr.dk/podcasts/v1/feeds/genstart
+* https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast
+* https://api.dr.dk/podcasts/v1/feeds/prompt
+* https://api.dr.dk/podcasts/v1/feeds/guld-og-groenne-skove
+* https://api.dr.dk/podcasts/v1/feeds/djaevlen-i-detaljen
+* https://api.dr.dk/podcasts/v1/feeds/tabloid-3
+* https://api.dr.dk/podcasts/v1/feeds/foelg-pengene
+* https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3
+* https://api.dr.dk/podcasts/v1/feeds/genstart
