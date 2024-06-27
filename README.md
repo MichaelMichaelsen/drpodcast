@@ -1,4 +1,8 @@
-# drpodcast 
+# drpodcast
+## Introduction
+This is a tool when you need to be able to listen to DR podcasts offline. 
+The idea is to be able to download the podcasts as mp3 files and then use them offline.
+
 ## Overview
 A Python script to download podcast from dr.dk
 
@@ -16,7 +20,7 @@ The mp3 will be prefixed with the date of the publication.
 Ensure that all the needed Python packages are installed
 
 ```
-pip install -r requirements.tx
+pip install -r requirements.txt
 ```
 
 ### Install
