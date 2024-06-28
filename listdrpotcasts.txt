@@ -9,3 +9,5 @@ https://api.dr.dk/podcasts/v1/feeds/genstart
 https://api.dr.dk/podcasts/v1/feeds/bakspejl
 https://api.dr.dk/podcasts/v1/feeds/hvad-skal-vi-med-konger
 https://api.dr.dk/podcasts/v1/feeds/balalajka
+https://api.dr.dk/podcasts/v1/feeds/genstart
+https://api.dr.dk/podcasts/v1/feeds/lyssky
