@@ -4,9 +4,8 @@
 import argparse
 import requests
 import xml.etree.ElementTree as ET
-import os
-import subprocess
 from datetime import datetime
+from pathvalidate import replace_symbol
 import yt_dlp
 
 version = "0.0.3"
@@ -51,7 +50,8 @@ try:
             pubdate = item.find('pubDate').text
             date_object = datetime.strptime(pubdate, '%a, %d %b %Y %H:%M:%S %z')
             date_only = date_object.strftime('%Y-%m-%d')
-            output_file = date_only + ' ' + title_text + ".mp3"
+            output_file_raw = date_only + ' ' + title_text + ".mp3"
+            output_file = replace_symbol(output_file_raw) # Ensure that we do not have strange characters in the file name
             url = enclosure.get('url')
             output_template = f"{date_only}-{title_text}.%(ext)s"
             yt_opts = {
