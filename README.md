@@ -27,14 +27,13 @@ Ensure that all the needed Python packages are installed
 pip install -r requirements.txt
 ```
 
-
 ## Usage
 ```
 python drpodcast.py --url https://api.dr.dk/podcasts/v1/feeds/tabloid-3
 
 ```
 ### Url from DR podcasts
-This can be extracted in the overview page for each podcast.
+This can be extracted https://www.dr.dk/lyd/programmer in the overview page for each podcast.
 <img src="images/RSSIcon.png" alt="RSSIcon">
  On the RSS icon, just right click, select copy link and use that link as argument for the script.
 
@@ -65,7 +64,7 @@ Podcast title Lyssky
 --------------------------------------------------
 
 ```
-The script will create a subdirectory named pdcasts and for each podcast group create a directory in the directory podcast.
+The script will create a subdirectory named podcasts and for each podcast group create a directory in the directory podcast.
 If a podcast already has been downloaded it will not be downloaded again.
 
 ## Todo
