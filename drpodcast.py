@@ -21,7 +21,7 @@ Example
 
    python drpodcast.py --url https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3
 
-Will create a directory "Stjerner og striber" and add the downloaded mp3 files.
+Will create a directory "Kampen om historien" and add the downloaded mp3 files.
 """
 
 def download_rss_xml_file(url: str) -> str:
@@ -37,16 +37,17 @@ def download_rss_xml_file(url: str) -> str:
         print(f"HTTP Error. {errh.args[0]}")
         return None
     except requests.exceptions.ReadTimeout as errrt: 
-        print("Time out")
+        print(f"Time out. Error code {errrt}")
         return None
     except requests.exceptions.ConnectionError as conerr: 
-        print("Connection error")
+        print(f"Connection error. Error c{ode {coberr}")
         return None 
 
-def main(url):
-
-
-    htmltext = download_rss_xml_file(url)
+def main(rssurl:str):
+    #
+    # Main control
+    #
+    htmltext = download_rss_xml_file(rssurl)
     root = ET.fromstring(htmltext)
     # Extract the subdirectory name from the image title
     podcast_title = root.find('.//channel/title').text
