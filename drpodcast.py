@@ -40,7 +40,7 @@ def download_rss_xml_file(url: str) -> str:
         print(f"Time out. Error code {errrt}")
         return None
     except requests.exceptions.ConnectionError as conerr: 
-        print(f"Connection error. Error c{ode {coberr}")
+        print(f"Connection error. Error code {coberr}")
         return None 
 
 def main(rssurl:str):
