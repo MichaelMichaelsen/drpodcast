@@ -9,7 +9,6 @@ from pathvalidate import sanitize_filename
 import yt_dlp
 
 version = "0.0.3"
-
 help_text = "URL for the RSS feed."
 description = """
 This script will parse the RSS link from dr.com and download the podcast as mp3 files.
@@ -25,15 +24,29 @@ Example
 Will create a directory "Stjerner og striber" and add the downloaded mp3 files.
 """
 
-parser = argparse.ArgumentParser(description=description,formatter_class=argparse.RawTextHelpFormatter)
-parser.add_argument('--url', type=str, 
-                    default="https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3", help=help_text)
-args = parser.parse_args()
-url = args.url
-try:
-    response = requests.get(url)
-    response.raise_for_status()
-    htmltext = response.text
+def download_rss_xml_file(url: str) -> str:
+    #
+    # Download the RSS xml with a given url
+    #
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        htmltext = response.text
+        return htmltext
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error. {errh.args[0]}")
+        return None
+    except requests.exceptions.ReadTimeout as errrt: 
+        print("Time out")
+        return None
+    except requests.exceptions.ConnectionError as conerr: 
+        print("Connection error")
+        return None 
+
+def main(url):
+
+
+    htmltext = download_rss_xml_file(url)
     root = ET.fromstring(htmltext)
     # Extract the subdirectory name from the image title
     podcast_title = root.find('.//channel/title').text
@@ -53,23 +66,20 @@ try:
             title_clean = sanitize_filename(title_text) # Ensure that we do not have strange characters in the file name
             output_template = f"{date_only} {title_clean}.%(ext)s"
             yt_opts = {
-               'verbose': False,
+                'verbose': False,
                 'outtmpl': output_template,
                 'windows-filenames': True,
-                #'simulate': True,
                 'paths': {'home': download_path}
             }
-            # args = ["yt-dlp", "--restrict-filenames", "-o", output_file, url ]
-            # result = subprocess.run(args, shell=False, text=True)
-            # print(result)
             url = enclosure.get('url')
             with yt_dlp.YoutubeDL(yt_opts) as ydl:
                 ydl.download(url)
             print('-' * 50)
-    #print(f"Output file {file_name} created.")
-except requests.exceptions.HTTPError as errh:
-    print(f"HTTP Error. {errh.args[0]}")
-except requests.exceptions.ReadTimeout as errrt: 
-    print("Time out")
-except requests.exceptions.ConnectionError as conerr: 
-    print("Connection error") 
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=description,formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('--url', type=str, 
+                        default="https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3", help=help_text)
+    args = parser.parse_args()
+    url = args.url
+    main(url)
