@@ -24,30 +24,42 @@ Example
 Will create a directory "Kampen om historien" and add the downloaded mp3 files.
 """
 
-def download_rss_xml_file(url: str) -> str:
-    #
-    # Download the RSS xml with a given url
-    #
+def download_rss_xml_file(rssurl: str) -> str:
+    """Download the RSS xml with a given url"""
     try:
-        response = requests.get(url)
+        response = requests.get(rssurl)
         response.raise_for_status()
         htmltext = response.text
         return htmltext
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error. {errh.args[0]}")
         return None
-    except requests.exceptions.ReadTimeout as errrt: 
+    except requests.exceptions.ReadTimeout as errrt:
         print(f"Time out. Error code {errrt}")
         return None
-    except requests.exceptions.ConnectionError as conerr: 
-        print(f"Connection error. Error code {coberr}")
+    except requests.exceptions.ConnectionError as conerr:
+        print(f"Connection error. Error code {conerr}")
         return None 
 
+def make_episode_list( htmltext: str)-> list:
+    """ Parse the rss xml file and extract a list of episoder (item)."""
+    podcast_list = []
+    root = ET.fromstring(htmltext)
+    for idx, item in enumerate(root.findall('.//item')):
+        title = item.find('title')
+        title_text = title.text
+        podcast_list.append(title_text)
+    return podcast_list
+        
 def main(rssurl:str):
     #
     # Main control
     #
     htmltext = download_rss_xml_file(rssurl)
+    episode_list = make_episode_list(htmltext=htmltext)
+    print(f"{len(episode_list)} episoder:")
+    for episode in episode_list:
+        print(episode)
     root = ET.fromstring(htmltext)
     # Extract the subdirectory name from the image title
     podcast_title = root.find('.//channel/title').text
