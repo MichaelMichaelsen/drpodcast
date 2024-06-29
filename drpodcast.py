@@ -5,7 +5,7 @@ import argparse
 import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime
-from pathvalidate import replace_symbol
+from pathvalidate import sanitize_filename
 import yt_dlp
 
 version = "0.0.3"
@@ -50,12 +50,10 @@ try:
             pubdate = item.find('pubDate').text
             date_object = datetime.strptime(pubdate, '%a, %d %b %Y %H:%M:%S %z')
             date_only = date_object.strftime('%Y-%m-%d')
-            output_file_raw = date_only + ' ' + title_text + ".mp3"
-            output_file = replace_symbol(output_file_raw) # Ensure that we do not have strange characters in the file name
-            url = enclosure.get('url')
-            output_template = f"{date_only}-{title_text}.%(ext)s"
+            title_clean = sanitize_filename(title_text) # Ensure that we do not have strange characters in the file name
+            output_template = f"{date_only} {title_clean}.%(ext)s"
             yt_opts = {
-               'verbose': True,
+               'verbose': False,
                 'outtmpl': output_template,
                 'windows-filenames': True,
                 #'simulate': True,
@@ -64,6 +62,7 @@ try:
             # args = ["yt-dlp", "--restrict-filenames", "-o", output_file, url ]
             # result = subprocess.run(args, shell=False, text=True)
             # print(result)
+            url = enclosure.get('url')
             with yt_dlp.YoutubeDL(yt_opts) as ydl:
                 ydl.download(url)
             print('-' * 50)
