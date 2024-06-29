@@ -1,4 +1,7 @@
 # drpodcast
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Rss](https://img.shields.io/badge/rss-F88900?style=for-the-badge&logo=rss&logoColor=white)
+
 ## Introduction
 This is a tool when you need to be able to listen to DR podcasts offline. 
 The idea is to be able to download the podcasts as mp3 files and then use them offline.
