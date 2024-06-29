@@ -30,8 +30,14 @@ Clone the repo
 ## Usage
 ```
 python drpodcast.py --url https://api.dr.dk/podcasts/v1/feeds/tabloid-3
+
 ```
-Typical output
+### Url from DR podcasts
+This can be extracted in the overview page for each podcast.
+<img src="images/RSSIcon.png" alt="RSSIcon">
+ On the RSS icon, just right click, select copy link and use that link as argument for the script.
+
+### Typical output
 ```
 $ python drpodcast.py --url https://api.dr.dk/podcasts/v1/feeds/lyssky
 Podcast title Lyssky
@@ -64,10 +70,7 @@ If a podcast already has been downloaded it will not be downloaded again.
 ## Todo
 Introduce a list of podcast to select.
 
-### Url from DR podcasts
-This can be extracted in the overview page for each podcast.
-<img src="images/RSSIcon.png" alt="RSSIcon">
- On the RSS icon, just right click, select copy link and use that link as argument for the script.
+
 
 ### DR podcast
 Currently I have found the following podcasts
