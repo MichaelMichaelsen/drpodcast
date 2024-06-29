@@ -15,17 +15,18 @@ The mp3 will be prefixed with the date of the publication.
 
 ## Installation
 
-### Prerequisite
+### Install
+Clone the repo
 
+```
+git clone git@github.com:MichaelMichaelsen/drpodcast.git
+```
 Ensure that all the needed Python packages are installed
 
 ```
 pip install -r requirements.txt
 ```
 
-### Install
-
-Clone the repo
 
 ## Usage
 ```
@@ -68,7 +69,8 @@ The script will create a subdirectory named pdcasts and for each podcast group c
 If a podcast already has been downloaded it will not be downloaded again.
 
 ## Todo
-Introduce a list of podcast to select.
+* Introduce a list of podcast to select.
+* Make a Windows binary of the tool
 
 
 
