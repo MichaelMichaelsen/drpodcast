@@ -2,15 +2,15 @@
 # drpotcast will decode the RSS xml file and extract the mp3 part of the file
 #
 import argparse
-import requests
-import xml.etree.ElementTree as ET
 from datetime import datetime
+import xml.etree.ElementTree as ET
+import requests
 from pathvalidate import sanitize_filename
 import yt_dlp
 
-version = "0.0.3"
-help_text = "URL for the RSS feed."
-description = """
+VERSION = "0.0.3"
+HELP_TEXT = "URL for the RSS feed."
+DESCRIPTION = """
 This script will parse the RSS link from dr.com and download the podcast as mp3 files.
 Go to https://www.dr.dk/lyd/programmer to find a podcast,
 then copy link from the RSS feed and use this as argument --url for the script.
@@ -25,7 +25,9 @@ Will create a directory "Kampen om historien" and add the downloaded mp3 files.
 """
 
 def download_rss_xml_file(rssurl: str) -> str:
-    """Download the RSS xml with a given url"""
+    """
+    Download the RSS xml with a given url
+    """
     try:
         response = requests.get(rssurl)
         response.raise_for_status()
@@ -39,10 +41,12 @@ def download_rss_xml_file(rssurl: str) -> str:
         return None
     except requests.exceptions.ConnectionError as conerr:
         print(f"Connection error. Error code {conerr}")
-        return None 
+        return None
 
 def make_episode_list( htmltext: str)-> list:
-    """ Parse the rss xml file and extract a list of episoder (item)."""
+    """
+    Parse the rss xml file and extract a list of episoder (item).
+    """
     podcast_list = []
     root = ET.fromstring(htmltext)
     for idx, item in enumerate(root.findall('.//item')):
@@ -50,11 +54,11 @@ def make_episode_list( htmltext: str)-> list:
         title_text = title.text
         podcast_list.append(title_text)
     return podcast_list
-        
+
 def main(rssurl:str):
-    #
-    # Main control
-    #
+    """
+    Main control
+    """
     htmltext = download_rss_xml_file(rssurl)
     episode_list = make_episode_list(htmltext=htmltext)
     print(f"{len(episode_list)} episoder:")
@@ -76,23 +80,26 @@ def main(rssurl:str):
             pubdate = item.find('pubDate').text
             date_object = datetime.strptime(pubdate, '%a, %d %b %Y %H:%M:%S %z')
             date_only = date_object.strftime('%Y-%m-%d')
-            title_clean = sanitize_filename(title_text) # Ensure that we do not have strange characters in the file name
+            # Ensure that we do not have strange characters in the file name
+            title_clean = sanitize_filename(title_text)
             output_template = f"{date_only} {title_clean}.%(ext)s"
             yt_opts = {
                 'verbose': False,
                 'outtmpl': output_template,
                 'windows-filenames': True,
+                'socket_timeout': 10,
                 'paths': {'home': download_path}
             }
-            url = enclosure.get('url')
+            podcast_url = enclosure.get('url')
             with yt_dlp.YoutubeDL(yt_opts) as ydl:
-                ydl.download(url)
+                ydl.download(podcast_url)
             print('-' * 50)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=description,formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('--url', type=str, 
-                        default="https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3", help=help_text)
+    parser = argparse.ArgumentParser(description=DESCRIPTION,
+                                     formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('--url', type=str,
+                        default="https://api.dr.dk/podcasts/v1/feeds/kampen-om-historien-3", help=HELP_TEXT)
     args = parser.parse_args()
     url = args.url
     main(url)
