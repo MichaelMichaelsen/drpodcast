@@ -12,3 +12,4 @@ https://api.dr.dk/podcasts/v1/feeds/stjerner-og-striber-podcast
 https://api.dr.dk/podcasts/v1/feeds/tabloid-3
 https://api.dr.dk/podcasts/v1/feeds/det-tomme-magasin
 https://api.dr.dk/podcasts/v1/feeds/kapitalisterne
+https://api.dr.dk/podcasts/v1/feeds/splittet-til-atomer
